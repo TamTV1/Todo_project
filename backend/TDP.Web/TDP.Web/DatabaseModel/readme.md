@@ -1,0 +1,2 @@
+﻿### Local 
+Scaffold-DbContext "data source=localhost;initial catalog=Todo_Db;user id=sa;password=Aa,123456;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir DatabaseModel/Entites -Context "ToDoDbContext" -f -UseDatabaseNames -Project TDP.Web
