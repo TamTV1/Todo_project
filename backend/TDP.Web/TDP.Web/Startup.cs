@@ -85,7 +85,13 @@ namespace TDP.Web
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TDP.Web v1"));
             }
 
+            app.UseCors(x => x
+               .AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader());
+
             app.UseHttpsRedirection();
+
 
             app.UseRouting();
 

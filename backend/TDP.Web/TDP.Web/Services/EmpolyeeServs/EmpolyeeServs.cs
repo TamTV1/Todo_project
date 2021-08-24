@@ -48,11 +48,21 @@ namespace TDP.Web.Services.EmpolyeeServs
                 {
                     var key = request.SearchKey.ToLower();
                     Expression<Func<Employee, bool>> filterSearch = PredicateBuilder.New<Employee>();
-                    var ignoresProperies = new List<string> { nameof(Employee.Id), nameof(Employee.IsActive) };
+                    //var ignoresProperies = new List<string> { nameof(Employee.Id), nameof(Employee.IsActive) };
+                    var ignoresProperies = new List<string> {  };
                     foreach (PropertyInfo propertyInfo in new Employee().GetType().GetProperties())
                     {
                         if (ignoresProperies.Contains(propertyInfo.Name)) continue;
-                        filterSearch = PredicateExpresion<Employee>.BuildExpressionForFilter(filterSearch, propertyInfo, key);
+                        switch (propertyInfo.Name)
+                        {
+                            case nameof(Employee.IsActive):
+                                filterSearch = filterSearch.Or(x => (!!x.IsActive.Value && "enable".Contains(key)) || (!x.IsActive.Value && "disable".Contains(key)));
+                                break;
+                            default:
+                                filterSearch = PredicateExpresion<Employee>.BuildExpressionForFilter(filterSearch, propertyInfo, key);
+                                break;
+                        }
+                        
                     }
                     filter = filter.And(filterSearch);
                 }

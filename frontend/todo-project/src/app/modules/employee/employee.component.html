@@ -1,0 +1,56 @@
+<h1>Welcome employee</h1>
+
+<div class="employee-wrapper">
+    <div class="btn-wrapper">
+        <button type="button" class="btn btn-primary">Create</button>
+    </div>
+    <div class="filter-wrapper row">
+        <div class="col-1 page-size">
+            <select (change)="handlePageSizeChange($event)" class="form-control" [value]="filterParams.pageSize">
+                <option *ngFor="let size of pageSizeList">
+                    {{ size }}
+                </option>
+            </select>
+        </div>
+        <div class="col-7"></div>
+        <div class="col-4 search-text">
+            <input type="text" class="form-control" [(ngModel)]="filterParams.searchKey"
+                (ngModelChange)="handleSearchData()" placeholder="search..." />
+        </div>
+
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">No.</th>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Position</th>
+                <th scope="col">Status</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of employeeData | paginate : {
+                itemsPerPage: filterParams.pageSize,
+                currentPage: filterParams.pageIndex,
+                totalItems: employeeTotal
+              }; index as i;">
+                <td scope="row">{{i + 1}}</td>
+                <td>{{item.id}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.email}}</td>
+                <td>{{item.phone}}</td>
+                <td>{{item.position}}</td>
+                <td>{{!!item.isActive ? 'enable' : 'disable'}}</td>
+                <td><a href="#" (click)="handleUpdateAction(item.id)">Edit</a></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="col-md-12 panation-wrapepr">
+        <pagination-controls previousLabel="Prev" nextLabel="Next" responsive="true"
+            (pageChange)="handlePageChange($event)"></pagination-controls>
+    </div>
+</div>

@@ -17,7 +17,7 @@ namespace TDP.Web.Models.Pagination
 
         public PaginationRequestModel(int pageIndex, int pageNumber, string searchKey)
         {
-            PageIndex = pageIndex;
+            PageIndex = pageIndex > 0 ? pageIndex - 1 : 0;
             PageNumber = pageNumber;
             SearchKey = searchKey?.Trim();
         }

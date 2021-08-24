@@ -9,8 +9,8 @@ using TDP.Web.Services.EmpolyeeServs;
 
 namespace TDP.Web.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
     public class EmployeeController : ControllerBase
     {
 
