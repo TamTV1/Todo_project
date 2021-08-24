@@ -95,8 +95,7 @@ export class ModifyEmployeeComponent extends BaseComponent implements OnInit, On
 
                 this.empId = data.id;
                 // next to task
-                this.setCurrentTab(this.tabsId.task);
-                this.tabset.select(this.currentTabId);
+                this.moveToTab(this.tabsId.task);
                 this.cdr.detectChanges();
             });
     }
@@ -124,8 +123,14 @@ export class ModifyEmployeeComponent extends BaseComponent implements OnInit, On
         this.store.dispatch(this.employeeActionsMethod.saveEmployeeAction(savedData));
     }
 
-    public setCurrentTab(tabId) {
+    public closeModal() {
+        this.modal.dismiss('close')
+    }
+    public moveToTab(tabId) {
         this.currentTabId = tabId;
         this.cdr.detectChanges();
+        this.tabset.select(this.currentTabId);
+        this.cdr.detectChanges();
+
     }
 }

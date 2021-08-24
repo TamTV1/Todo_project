@@ -55,16 +55,16 @@
                             <label class="form-check-label"
                                 for="exampleCheck1">{{dataFields.IS_ACTIVE.displayName}}</label>
                         </div>
-                        <div class="mb-3">
-                            <button *ngIf="fgData" type="button" class="btn btn-outline-primary"
+                        <div class="mb-3 text-center">
+                            <button *ngIf="fgData" type="button" class="btn btn-primary"
                                 (click)="handleModifyAction()" [disabled]="fgData.invalid">Continue</button>
-                        </div>>
+                        </div>
                     </form>
                 </ng-template>
             </ngb-tab>
             <ngb-tab id="{{tabsId.task}}" title="Tasks" [disabled]="!empId">
                 <ng-template ngbTabContent>
-                    Tasks
+                    <task-management [empId]="empId" (dolaterAction)="closeModal()" (backToInfoAction)="moveToTab(tabsId.info)"></task-management>
                 </ng-template>
             </ngb-tab>
         </ngb-tabset>

@@ -11,10 +11,8 @@ export const PAGINATION_CONSTANT = {
 }
 export const PAGE_SIZE_LIST = [
     PAGINATION_CONSTANT.PAGE_SIZE,
-    30,
     50,
     100
-
 ];
 export class PaginationMdel {
     pageIndex: number;

@@ -9,7 +9,7 @@ using TDP.Web.DatabaseModel.Entites;
 using TDP.Web.Models.Core;
 using TDP.Web.Models.EmployeeModel;
 using TDP.Web.Models.Pagination;
-using TDP.Web.Services.EmpolyeeServs;
+using TDP.Web.Services.EmpolyeeServ;
 
 namespace TDP.Web.Controllers
 {
@@ -18,8 +18,8 @@ namespace TDP.Web.Controllers
     public class EmployeeController : ControllerBase
     {
 
-        private readonly IEmpolyeeServs _empolyeeServs;
-        public EmployeeController(IEmpolyeeServs empolyeeServs)
+        private readonly IEmpolyeeServ _empolyeeServs;
+        public EmployeeController(IEmpolyeeServ empolyeeServs)
         {
             _empolyeeServs = empolyeeServs;
         }

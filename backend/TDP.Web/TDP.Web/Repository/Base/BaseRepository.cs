@@ -16,6 +16,12 @@ namespace TDP.Web.Repository.Base
         private readonly DbFactory _dbFactory;
         private DbSet<T> _dbSet;
         private readonly IHttpContextAccessor _httpContext;
+        public BaseRepository(DbFactory dbFactory, IHttpContextAccessor httpContext)
+        {
+            _dbFactory = dbFactory ?? throw new ArgumentNullException(nameof(dbFactory));
+            _dbSet = _dbFactory.DbContext.Set<T>();
+            _httpContext = httpContext;
+        }
 
         // Get item by condition and include
         public async Task<T> GetItem(Expression<Func<T, bool>> filter = null,
@@ -33,13 +39,24 @@ namespace TDP.Web.Repository.Base
 
             return await query.FirstOrDefaultAsync();
         }
-        public BaseRepository(DbFactory dbFactory, IHttpContextAccessor httpContext)
+        // Get list by condition and include, order
+        public async Task<IEnumerable<T>> GetListAsync(Expression<Func<T, bool>> filter = null
+        , Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null
+        , Func<IQueryable<T>, IIncludableQueryable<T, object>> includeProperties = null)
         {
-            _dbFactory = dbFactory ?? throw new ArgumentNullException(nameof(dbFactory));
-            _dbSet = _dbFactory.DbContext.Set<T>();
-            _httpContext = httpContext;
-        }
+            var query = _dbSet.AsNoTracking();
 
+            if (filter != null)
+                query = query.Where(filter);
+
+            if (includeProperties != null)
+                query = includeProperties(query);
+
+            if (orderBy != null)
+                return await orderBy(query).ToListAsync();
+            else
+                return await query.ToListAsync();
+        }
         public async Task<PaginationResponseModel<T>> GetListPaginationCustomSortAsync(
             int pageIndex
             , int pageSize

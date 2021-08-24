@@ -1,5 +1,16 @@
 <div class="task-management">
-    <div>
-        
+    <div class="header-button">
+        <button type="button" class="btn btn-primary">New Task</button>
+        <button type="button" class="btn btn-outline-primary" (click)="handleDoLater()">Do later</button>
+    </div>
+    <div class="task-list">
+        <h4>Task List</h4>
+
+        <ul>
+            <li *ngFor="let item of taskData">{{item.name}}</li>
+        </ul>
+    </div>
+    <div class="bottom-header">
+        <button type="button" class="btn btn-outline-primary" (click)="handleBackToInfo()">Back to Info tab</button>
     </div>
 </div>

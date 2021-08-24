@@ -17,7 +17,9 @@ using TDP.Web.Base;
 using TDP.Web.DatabaseModel.Entites;
 using TDP.Web.Repository.Base;
 using TDP.Web.Repository.DatabaseModel.Entites;
-using TDP.Web.Services.EmpolyeeServs;
+using TDP.Web.Repository.TaskRepos;
+using TDP.Web.Services.EmpolyeeServ;
+using TDP.Web.Services.TaskServ;
 
 namespace TDP.Web
 {
@@ -68,10 +70,12 @@ namespace TDP.Web
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IEmployeeRepos, EmployeeRepos>();
+            services.AddScoped<ITaskRepos, TaskRepos>();
             #endregion
 
             #region declare service 
-            services.AddScoped<IEmpolyeeServs, EmpolyeeServs>();
+            services.AddScoped<IEmpolyeeServ, EmpolyeeServ>();
+            services.AddScoped<ITaskServ, TaskServ>();
             #endregion
         }
 

@@ -12,6 +12,9 @@ namespace TDP.Web.Repository.Base
     {
         Task<T> GetItem(Expression<Func<T, bool>> filter = null,
             Func<IQueryable<T>, IIncludableQueryable<T, object>> includeProperties = null);
+        Task<IEnumerable<T>> GetListAsync(Expression<Func<T, bool>> filter = null
+            , Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null
+            , Func<IQueryable<T>, IIncludableQueryable<T, object>> includeProperties = null);
         Task<PaginationResponseModel<T>> GetListPaginationCustomSortAsync(
             int pageIndex
             , int pageSize

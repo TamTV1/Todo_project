@@ -15,19 +15,19 @@ using TDP.Web.Models.Pagination;
 using TDP.Web.Repository.Base;
 using TDP.Web.Repository.DatabaseModel.Entites;
 
-namespace TDP.Web.Services.EmpolyeeServs
+namespace TDP.Web.Services.EmpolyeeServ
 {
-    public class EmpolyeeServs : IEmpolyeeServs
+    public class EmpolyeeServ : IEmpolyeeServ
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IEmployeeRepos _employeeRepos;
         private readonly IMapper _mapper;
-        private readonly ILogger<EmpolyeeServs> _logger;
-        public EmpolyeeServs(
+        private readonly ILogger<EmpolyeeServ> _logger;
+        public EmpolyeeServ(
             IUnitOfWork unitOfWork,
             IEmployeeRepos employeeRepos,
             IMapper mapper,
-            ILogger<EmpolyeeServs> logger
+            ILogger<EmpolyeeServ> logger
             )
         {
             _unitOfWork = unitOfWork;
@@ -52,7 +52,7 @@ namespace TDP.Web.Services.EmpolyeeServs
             catch (Exception ex)
             {
                 res = new ResponseModel<Employee>(HttpStatusCode.InternalServerError, ex.Message, null);
-                _logger.LogError(ex, $"{nameof(EmpolyeeServs)} - {nameof(EmpolyeeServs.GetItemById)}: {ex.Message}");
+                _logger.LogError(ex, $"{nameof(EmpolyeeServ)} - {nameof(EmpolyeeServ.GetItemById)}: {ex.Message}");
             }
 
             return res;
@@ -105,7 +105,7 @@ namespace TDP.Web.Services.EmpolyeeServs
             catch (Exception ex)
             {
                 res = new ResponseModel<PaginationResponseModel<Employee>>(HttpStatusCode.InternalServerError, ex.Message, new PaginationResponseModel<Employee>());
-                _logger.LogError(ex, $"{nameof(EmpolyeeServs)} - {nameof(EmpolyeeServs.GetItems)}: {ex.Message}");
+                _logger.LogError(ex, $"{nameof(EmpolyeeServ)} - {nameof(EmpolyeeServ.GetItems)}: {ex.Message}");
             }
             return res;
         }
@@ -130,7 +130,7 @@ namespace TDP.Web.Services.EmpolyeeServs
             catch (Exception ex)
             {
                 res = new ResponseModel<Employee>(HttpStatusCode.InternalServerError, ex.Message, null);
-                _logger.LogError(ex, $"{nameof(EmpolyeeServs)} - {nameof(EmpolyeeServs.CreateNewItem)}: {ex.Message}");
+                _logger.LogError(ex, $"{nameof(EmpolyeeServ)} - {nameof(EmpolyeeServ.CreateNewItem)}: {ex.Message}");
             }
             return res;
         }
@@ -164,7 +164,7 @@ namespace TDP.Web.Services.EmpolyeeServs
             catch (Exception ex)
             {
                 res = new ResponseModel<Employee>(HttpStatusCode.InternalServerError, ex.Message, null);
-                _logger.LogError(ex, $"{nameof(EmpolyeeServs)} - {nameof(EmpolyeeServs.UpdateItem)}: {ex.Message}");
+                _logger.LogError(ex, $"{nameof(EmpolyeeServ)} - {nameof(EmpolyeeServ.UpdateItem)}: {ex.Message}");
             }
             return res;
         }

@@ -4,9 +4,9 @@ using TDP.Web.Models.Core;
 using TDP.Web.Models.EmployeeModel;
 using TDP.Web.Models.Pagination;
 
-namespace TDP.Web.Services.EmpolyeeServs
+namespace TDP.Web.Services.EmpolyeeServ
 {
-    public interface IEmpolyeeServs
+    public interface IEmpolyeeServ
     {
         Task<ResponseModel<Employee>> GetItemById(string id);
         Task<ResponseModel<PaginationResponseModel<Employee>>> GetItems(PaginationRequestModel request);

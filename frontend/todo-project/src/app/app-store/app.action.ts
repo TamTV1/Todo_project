@@ -2,12 +2,21 @@ import { Injectable } from '@angular/core';
 import { CustomAction } from '@app/modules/shared/base/custom-action.model';
 
 export enum AppActionNames {
-    SUCCESS_ACTION = '[EMPLOYEE] Success Action',
-    FAILED_ACTION = '[EMPLOYEE] Failed Action',
+    SUCCESS_ACTION = '[APP] Success Action',
+    FAILED_ACTION = '[APP] Failed Action',
+
+    GET_TASK_BY_USER = '[APP] GET TASK BY USER',
 }
 
 @Injectable()
 export class AppActionsMethod {
+
+    public getTaskByUser(payload: any) {
+        return {
+            type: AppActionNames.GET_TASK_BY_USER,
+            payload: payload,
+        };
+    }
 
     /**
      * ACTION DEFAULT
