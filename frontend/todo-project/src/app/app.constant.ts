@@ -1,3 +1,5 @@
+import { ValidatorFn } from '@angular/forms';
+
 export const API_SERVICE = {
     API_URL: `https://localhost:44309/api`,
 }
@@ -24,4 +26,19 @@ export class PaginationMdel {
         this.pageSize = size;
         this.searchKey = key;
     }
+}
+
+export const ValidatorPattern = {
+    EMAIL: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$',
+};
+export class ControlData {
+    controlName: string;
+    displayName: string;
+    placeholder?: string;
+    validator?: ValidatorFn[];
+}
+export enum ErrorMessageTypeEnum {
+    REQUIRED,
+    PATTERN_EMAIL,
+    CUSTOM_MESSAGE,
 }

@@ -1,1 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+.custom-disabled {
+    pointer-events: none;
+    color: #000 !important;
+    filter: opacity(0.5)
+}

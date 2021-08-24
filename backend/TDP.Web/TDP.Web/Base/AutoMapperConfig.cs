@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using TDP.Web.DatabaseModel.Entites;
+using TDP.Web.Models.EmployeeModel;
 
 namespace TDP.Web.Base
 {
@@ -8,6 +10,8 @@ namespace TDP.Web.Base
         {
             var config = new MapperConfiguration(cfg =>
             {
+                cfg.CreateMap<Employee, EmployeeModifyModel>()
+                    .ReverseMap();
             });
             return config.CreateMapper();
         }

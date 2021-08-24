@@ -16,4 +16,12 @@ export class EmployeeService {
     public getEmployee(params: any): Observable<any> {
         return this.httpClient.get<any>(`${this.employeeUrl}/filterList`, { params: params });
     }
+
+    public getDetailEmployee(params: any): Observable<any> {
+        return this.httpClient.get<any>(`${this.employeeUrl}/detail`, { params: { id: params } });
+    }
+
+    public saveEmployee(params: any): Observable<any> {
+        return this.httpClient.post<any>(`${this.employeeUrl}/save`, params);
+    }
 }

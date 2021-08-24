@@ -1,0 +1,72 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{modalTitle}}</h4>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+    <div class="d-flex tab-wrapper">
+        <ngb-tabset #tabset [destroyOnHide]="false">
+            <ngb-tab id="{{tabsId.info}}" title="Info">
+                <ng-template ngbTabContent>
+                    <form *ngIf="fgData" [formGroup]="fgData">
+                        <div class="mb-3">
+                            <label for="{{dataFields.NAME.controlName}}"
+                                class="form-label">{{dataFields.NAME.displayName}}</label>
+                            <input type="text" class="form-control" [attr.name]="dataFields.NAME.controlName"
+                                id="{{dataFields.NAME.controlName}}" [formControlName]="dataFields.NAME.controlName"
+                                (keydown.enter)="handleModifyAction()" autocomplete="off">
+                            <error-message
+                                [condition]="xnErrorMessageHelper.isRequired(fgData, dataFields.NAME.controlName)"
+                                [fieldName]="dataFields.NAME.displayName" [typeErr]="ERR_MES_TYPE_ENUM.REQUIRED">
+                            </error-message>
+                        </div>
+                        <div class="mb-3">
+                            <label for="{{dataFields.EMAIL.controlName}}"
+                                class="form-label">{{dataFields.EMAIL.displayName}}</label>
+                            <input type="text" class="form-control" [attr.name]="dataFields.EMAIL.controlName"
+                                id="{{dataFields.EMAIL.controlName}}" [formControlName]="dataFields.EMAIL.controlName"
+                                (keydown.enter)="handleModifyAction()" autocomplete="off">
+                            <error-message
+                                [condition]="xnErrorMessageHelper.isRequired(fgData, dataFields.EMAIL.controlName)"
+                                [fieldName]="dataFields.EMAIL.displayName" [typeErr]="ERR_MES_TYPE_ENUM.REQUIRED">
+                            </error-message>
+                            <error-message
+                                [condition]="xnErrorMessageHelper.isInvalidPattern(fgData, dataFields.EMAIL.controlName)"
+                                [fieldName]="dataFields.EMAIL.displayName" [typeErr]="ERR_MES_TYPE_ENUM.PATTERN_EMAIL">
+                            </error-message>
+                        </div>
+                        <div class="mb-3">
+                            <label for="{{dataFields.PHONE.controlName}}"
+                                class="form-label">{{dataFields.PHONE.displayName}}</label>
+                            <input type="text" class="form-control" [attr.name]="dataFields.PHONE.controlName"
+                                id="{{dataFields.PHONE.controlName}}" [formControlName]="dataFields.PHONE.controlName"
+                                (keydown.enter)="handleModifyAction()" autocomplete="off">
+                        </div>
+                        <div class="mb-3">
+                            <label for="{{dataFields.POSITION.controlName}}"
+                                class="form-label">{{dataFields.POSITION.displayName}}</label>
+                            <input type="text" class="form-control" [attr.name]="dataFields.POSITION.controlName"
+                                id="{{dataFields.POSITION.controlName}}"
+                                [formControlName]="dataFields.POSITION.controlName"
+                                (keydown.enter)="handleModifyAction()" autocomplete="off">
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="{{dataFields.IS_ACTIVE.controlName}}"
+                                [formControlName]="dataFields.IS_ACTIVE.controlName">
+                            <label class="form-check-label"
+                                for="exampleCheck1">{{dataFields.IS_ACTIVE.displayName}}</label>
+                        </div>
+                        <div class="mb-3">
+                            <button *ngIf="fgData" type="button" class="btn btn-outline-primary"
+                                (click)="handleModifyAction()" [disabled]="fgData.invalid">Continue</button>
+                        </div>>
+                    </form>
+                </ng-template>
+            </ngb-tab>
+            <ngb-tab id="{{tabsId.task}}" title="Tasks" [disabled]="!empId">
+                <ng-template ngbTabContent>
+                    Tasks
+                </ng-template>
+            </ngb-tab>
+        </ngb-tabset>
+    </div>
+</div>

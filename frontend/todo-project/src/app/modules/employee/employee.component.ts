@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { PAGE_SIZE_LIST, PaginationMdel, PAGINATION_CONSTANT } from '@app/app.constant';
 import { AppState } from '@app/app.module';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
@@ -26,11 +27,16 @@ export class EmployeeComponent extends BaseComponent implements OnInit, OnDestro
     public employeeTotal = 0;
     //#endregion
 
+    //#region modal
+    public modifyEmpId = '';
+    //#endregion
+
     constructor(
         protected store: Store<AppState>,
         protected employeeActionsMethod: EmployeeActionsMethod,
         protected employeeSelectors: EmployeeSelectors,
         protected cdr: ChangeDetectorRef,
+        private modalService: NgbModal,
     ) {
         super();
     }
@@ -78,7 +84,17 @@ export class EmployeeComponent extends BaseComponent implements OnInit, OnDestro
         this.getEmployees();
     }
 
-    public handleUpdateAction(id: string) {
+    public handleModifyEmployee(id: string = '', content: any) {
+        this.modifyEmpId = id;
 
+        this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'xl' }).result.then((result) => {
+            console.log(result);
+            this.getEmployees();
+        }, (reason) => {
+            console.log(reason);
+            this.getEmployees();
+        });
+
+        this.cdr.detectChanges();
     }
 }

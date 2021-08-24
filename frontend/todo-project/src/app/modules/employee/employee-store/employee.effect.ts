@@ -35,4 +35,48 @@ export class EmployeeEffects {
             );
         }),
     );
+
+    @Effect()
+    getDetailEmployee$ = this.actions$.pipe(
+        ofType(EmployeeActionNames.GET_DETAIL_EMPLOYEES),
+        switchMap((action: CustomAction) => {
+            return this.employeeService.getDetailEmployee(action.payload).pipe(
+                map((res) => {
+                    if (!!res && res.code === 200)
+                        return this.employeeActionsMethod.successAction(
+                            action.type,
+                            res.data,
+                        );
+
+                    const mes = !!res ? res.message : 'error';
+                    return this.employeeActionsMethod.failedAction(action.type, mes);
+                }),
+                catchError((err) =>
+                    of(this.employeeActionsMethod.failedAction(action.type, err)),
+                ),
+            );
+        }),
+    );
+
+    @Effect()
+    saveEmployee$ = this.actions$.pipe(
+        ofType(EmployeeActionNames.SAVE_EMPLOYEE),
+        switchMap((action: CustomAction) => {
+            return this.employeeService.saveEmployee(action.payload).pipe(
+                map((res) => {
+                    if (!!res && res.code === 200)
+                        return this.employeeActionsMethod.successAction(
+                            action.type,
+                            res.data,
+                        );
+
+                    const mes = !!res ? res.message : 'error';
+                    return this.employeeActionsMethod.failedAction(action.type, mes);
+                }),
+                catchError((err) =>
+                    of(this.employeeActionsMethod.failedAction(action.type, err)),
+                ),
+            );
+        }),
+    );
 }

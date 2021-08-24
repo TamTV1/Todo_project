@@ -17,6 +17,22 @@ namespace TDP.Web.Repository.Base
         private DbSet<T> _dbSet;
         private readonly IHttpContextAccessor _httpContext;
 
+        // Get item by condition and include
+        public async Task<T> GetItem(Expression<Func<T, bool>> filter = null,
+            Func<IQueryable<T>, IIncludableQueryable<T, object>> includeProperties = null)
+        {
+            var query = _dbSet.AsNoTracking();
+
+            if (filter != null)
+                query = query.Where(filter);
+
+            if (includeProperties != null)
+            {
+                query = includeProperties(query);
+            }
+
+            return await query.FirstOrDefaultAsync();
+        }
         public BaseRepository(DbFactory dbFactory, IHttpContextAccessor httpContext)
         {
             _dbFactory = dbFactory ?? throw new ArgumentNullException(nameof(dbFactory));
@@ -60,6 +76,20 @@ namespace TDP.Web.Repository.Base
                 result = await query.Pagination(pageIndex, pageSize).ToListAsync();
             }
             return new PaginationResponseModel<T>(totalItems, result);
+        }
+
+        public async Task InsertAsBaseEntityAsync(T entity)
+        {
+            (entity as dynamic).Id = Guid.NewGuid().ToString();
+
+            _dbFactory.DbContext.Entry(entity);
+            await _dbSet.AddAsync(entity);
+        }
+
+        public void UpdateAsBaseEntity(T entity)
+        {
+            _dbSet.Attach(entity);
+            _dbFactory.DbContext.Entry(entity).State = EntityState.Modified;
         }
 
         public async Task SaveChangesAsync()

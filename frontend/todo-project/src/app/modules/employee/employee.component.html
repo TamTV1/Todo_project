@@ -2,7 +2,7 @@
 
 <div class="employee-wrapper">
     <div class="btn-wrapper">
-        <button type="button" class="btn btn-primary">Create</button>
+        <button type="button" class="btn btn-primary" (click)="handleModifyEmployee('', contentModal)">Create</button>
     </div>
     <div class="filter-wrapper row">
         <div class="col-1 page-size">
@@ -39,13 +39,13 @@
                 totalItems: employeeTotal
               }; index as i;">
                 <td scope="row">{{i + 1}}</td>
-                <td>{{item.id}}</td>
-                <td>{{item.name}}</td>
+                <td><a href="#" (click)="handleModifyEmployee(item.id, contentModal)">{{item.id}}</a></td>
+                <td><a href="#" (click)="handleModifyEmployee(item.id, contentModal)">{{item.name}}</a></td>
                 <td>{{item.email}}</td>
                 <td>{{item.phone}}</td>
                 <td>{{item.position}}</td>
                 <td>{{!!item.isActive ? 'enable' : 'disable'}}</td>
-                <td><a href="#" (click)="handleUpdateAction(item.id)">Edit</a></td>
+                <td><a href="#" (click)="handleModifyEmployee(item.id, contentModal)">Edit</a></td>
             </tr>
         </tbody>
     </table>
@@ -54,3 +54,8 @@
             (pageChange)="handlePageChange($event)"></pagination-controls>
     </div>
 </div>
+
+
+<ng-template #contentModal let-modal>
+    <modify-employee [empId]="modifyEmpId" [modal]="modal"></modify-employee>
+</ng-template>

@@ -6,6 +6,8 @@ export enum EmployeeActionNames {
     FAILED_ACTION = '[EMPLOYEE] Failed Action',
 
     GET_EMPLOYEES = '[EMPLOYEE] GET EMPLOYEES',
+    GET_DETAIL_EMPLOYEES = '[EMPLOYEE] GET DETAIL EMPLOYEE',
+    SAVE_EMPLOYEE = '[EMPLOYEE] SAVE EMPLOYEE',
 }
 
 @Injectable()
@@ -14,6 +16,18 @@ export class EmployeeActionsMethod {
     public getEmployeesAction(payload: any) {
         return {
             type: EmployeeActionNames.GET_EMPLOYEES,
+            payload: payload,
+        };
+    }
+    public getDetailEmployeeAction(payload: any) {
+        return {
+            type: EmployeeActionNames.GET_DETAIL_EMPLOYEES,
+            payload: payload,
+        };
+    }
+    public saveEmployeeAction(payload: any) {
+        return {
+            type: EmployeeActionNames.SAVE_EMPLOYEE,
             payload: payload,
         };
     }

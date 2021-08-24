@@ -10,6 +10,8 @@ namespace TDP.Web.Repository.Base
 {
     public interface IBaseRepository<T> where T : class
     {
+        Task<T> GetItem(Expression<Func<T, bool>> filter = null,
+            Func<IQueryable<T>, IIncludableQueryable<T, object>> includeProperties = null);
         Task<PaginationResponseModel<T>> GetListPaginationCustomSortAsync(
             int pageIndex
             , int pageSize
@@ -22,5 +24,8 @@ namespace TDP.Web.Repository.Base
         Task<bool> AnyAsync(
             Expression<Func<T, bool>> filter,
             Func<IQueryable<T>, IIncludableQueryable<T, object>> includeProperties = null);
+
+        Task InsertAsBaseEntityAsync(T entity);
+        void UpdateAsBaseEntity(T entity);
     }
 }
