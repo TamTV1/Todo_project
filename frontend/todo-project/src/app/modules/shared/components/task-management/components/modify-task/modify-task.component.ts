@@ -44,6 +44,7 @@ export class ModifyTaskComponent extends BaseComponent implements OnInit, OnDest
     //#endregion
 
     public modalTitle = "New Task";
+    public btnText = "Create New";
 
     constructor(
         protected store: Store<AppState>,
@@ -64,9 +65,7 @@ export class ModifyTaskComponent extends BaseComponent implements OnInit, OnDest
 
         if (!!this.taskId) {
             this.modalTitle = "Update Task"
-            this.store.dispatch(this.appActionsMethod.getTaskDetailAction(this.taskId));
-        } else {
-            this.initForm(null);
+            this.btnText = "Update"
         }
     }
 
@@ -81,17 +80,25 @@ export class ModifyTaskComponent extends BaseComponent implements OnInit, OnDest
 
                 this.taskLayoutList = state;
                 this.cdr.detectChanges();
+
+                // wait load taskLayoutList first after that call init form 
+                if (!!this.taskId) {
+                    this.store.dispatch(this.appActionsMethod.getTaskDetailAction(this.taskId));
+                } else {
+                    this.initForm(null);
+                }
             });
     }
 
     public initForm(data) {
         if (!this.controlDataList || !this.controlDataList.length) return;
 
+        const defaultLayout = !!data && !!data[this.dataFields.LAYOUT.controlName] ? data[this.dataFields.LAYOUT.controlName] : this.taskLayoutList[0].value;
         const formgroup = this.fb.group({});
         this.controlDataList.forEach(element => {
             const hasData = !!data && !!data[element.controlName];
-            // const defaultValue = element.controlName === this.dataFields.IS_ACTIVE.controlName ? hasData : '';
-            formgroup.addControl(element.controlName, new FormControl(hasData ? data[element.controlName] : '', element.validator));
+            const defaultValue = element.controlName === this.dataFields.LAYOUT.controlName ? defaultLayout : '';
+            formgroup.addControl(element.controlName, new FormControl(hasData ? data[element.controlName] : defaultValue, element.validator));
         });
 
         this.fgData = formgroup;

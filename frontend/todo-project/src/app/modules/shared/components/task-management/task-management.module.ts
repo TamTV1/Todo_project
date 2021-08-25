@@ -6,6 +6,9 @@ import { ModifyTaskComponent } from './components/modify-task/modify-task.compon
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ErrorMessageModule } from '../error-message/error-message.module';
+import { NgBootstrapDatetimeAngularModule } from 'ng-bootstrap-datetime-angular';
+
+
 @NgModule({
     imports: [
         CommonModule,
@@ -13,6 +16,7 @@ import { ErrorMessageModule } from '../error-message/error-message.module';
         FormsModule,
         ReactiveFormsModule,
         ErrorMessageModule,
+        NgBootstrapDatetimeAngularModule
     ],
     declarations: [TaskManagementComponent, ModifyTaskComponent],
     exports: [TaskManagementComponent],

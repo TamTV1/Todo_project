@@ -16,13 +16,17 @@
         <div class="mb-3">
             <label for="{{dataFields.START_TIME.controlName}}"
                 class="form-label">{{dataFields.START_TIME.displayName}}</label>
+            <ng-bootstrap-datetime-angular placeholder="Select DateTime" inputDatetimeFormat="dd/MM/yyyy hh:mm a"
+                [formControlName]="dataFields.START_TIME.controlName" id="{{dataFields.START_TIME.controlName}}"
+                [attr.name]="dataFields.START_TIME.controlName"></ng-bootstrap-datetime-angular>
         </div>
-        <!--<div class="mb-3">
-            <label for="{{dataFields.PHONE.controlName}}" class="form-label">{{dataFields.PHONE.displayName}}</label>
-            <input type="text" class="form-control" [attr.name]="dataFields.PHONE.controlName"
-                id="{{dataFields.PHONE.controlName}}" [formControlName]="dataFields.PHONE.controlName"
-                (keydown.enter)="handleModifyAction()" autocomplete="off">
-        </div> -->
+        <div class="mb-3">
+            <label for="{{dataFields.END_TIME.controlName}}"
+                class="form-label">{{dataFields.END_TIME.displayName}}</label>
+            <ng-bootstrap-datetime-angular placeholder="Select DateTime" inputDatetimeFormat="dd/MM/yyyy hh:mm a"
+                [formControlName]="dataFields.END_TIME.controlName" id="{{dataFields.END_TIME.controlName}}"
+                [attr.name]="dataFields.END_TIME.controlName"></ng-bootstrap-datetime-angular>
+        </div>
         <div class="mb-3">
             <label for="{{dataFields.DESCRIPTION.controlName}}"
                 class="form-label">{{dataFields.DESCRIPTION.displayName}}</label>
@@ -33,14 +37,14 @@
         <div class="mb-3">
             <label for="{{dataFields.LAYOUT.controlName}}" class="form-label">{{dataFields.LAYOUT.displayName}}</label>
             <select class="form-control" [formControlName]="dataFields.LAYOUT.controlName">
-                <option *ngFor="let item of taskLayoutList" [value]="item.value">
+                <option *ngFor="let item of taskLayoutList" [ngValue]="item.value">
                     {{ item.text }}
                 </option>
             </select>
         </div>
         <div class="mb-3 text-center">
             <button *ngIf="fgData" type="button" class="btn btn-primary" (click)="handleModifyAction()"
-                [disabled]="fgData.invalid">Continue</button>
+                [disabled]="fgData.invalid">{{btnText}}</button>
         </div>
     </form>
 </div>
