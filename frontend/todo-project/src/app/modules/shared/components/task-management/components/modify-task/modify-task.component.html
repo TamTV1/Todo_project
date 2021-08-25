@@ -30,6 +30,14 @@
                 id="{{dataFields.DESCRIPTION.controlName}}" [formControlName]="dataFields.DESCRIPTION.controlName"
                 (keydown.enter)="handleModifyAction()" autocomplete="off"></textarea>
         </div>
+        <div class="mb-3">
+            <label for="{{dataFields.LAYOUT.controlName}}" class="form-label">{{dataFields.LAYOUT.displayName}}</label>
+            <select class="form-control" [formControlName]="dataFields.LAYOUT.controlName">
+                <option *ngFor="let item of taskLayoutList" [value]="item.value">
+                    {{ item.text }}
+                </option>
+            </select>
+        </div>
         <div class="mb-3 text-center">
             <button *ngIf="fgData" type="button" class="btn btn-primary" (click)="handleModifyAction()"
                 [disabled]="fgData.invalid">Continue</button>

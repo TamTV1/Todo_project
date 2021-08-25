@@ -71,17 +71,17 @@ export class ModifyTaskComponent extends BaseComponent implements OnInit, OnDest
     }
 
     private onEffectAction() {
-        // this.appSelectors.getTaskLayoutList$
-        //     .pipe(takeUntil(super.ngUnsubscribe()))
-        //     .subscribe((state) => {
-        //         debugger;
-        //         if (!state || !state.length) {
-        //             this.store.dispatch(this.appActionsMethod.getDropdownTaskLayoutAction());
-        //             return;
-        //         }
+        this.appSelectors.getTaskLayoutList$
+            .pipe(takeUntil(super.ngUnsubscribe()))
+            .subscribe((state) => {
+                if (!state || !state.length) {
+                    this.store.dispatch(this.appActionsMethod.getDropdownTaskLayoutAction());
+                    return;
+                }
 
-        //         this.taskLayoutList = state;
-        //     });
+                this.taskLayoutList = state;
+                this.cdr.detectChanges();
+            });
     }
 
     public initForm(data) {

@@ -5,7 +5,7 @@ import { createFeatureSelector, Store } from '@ngrx/store';
 import { EmployeeActionNames } from './employee.action';
 import { IEmployeeState } from './employee.state';
 
-export const employeeState = createFeatureSelector<IEmployeeState>('employeeState');
+export const employeeState = createFeatureSelector<IEmployeeState>('employee');
 
 @Injectable({
     providedIn: 'root'
