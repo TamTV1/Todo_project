@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AppActionsMethod } from '@app/app-store/app.action';
+import { AppActionNames, AppActionsMethod } from '@app/app-store/app.action';
 import { AppSelectors } from '@app/app-store/app.selector';
 import { ControlData, ErrorMessageTypeEnum } from '@app/app.constant';
 import { AppState } from '@app/app.module';
@@ -20,6 +20,7 @@ export class ModifyTaskComponent extends BaseComponent implements OnInit, OnDest
 
     //#region Input / ouyput
     @Input() taskId: string;
+    @Input() userId: string;
     @Input() modal: any;
     //#endregion
 
@@ -31,8 +32,8 @@ export class ModifyTaskComponent extends BaseComponent implements OnInit, OnDest
         START_TIME: <ControlData>{ controlName: 'startTime', displayName: 'Start Time' },
         END_TIME: <ControlData>{ controlName: 'endTime', displayName: 'End Time' },
         DESCRIPTION: <ControlData>{ controlName: 'description', displayName: 'Description' },
-        LAYOUT: <ControlData>{ controlName: 'layout', displayName: 'Layout' },
-        IMAGE_LINK: <ControlData>{ controlName: 'imageLink', displayName: 'Image Link' },
+        LAYOUT: <ControlData>{ controlName: 'layoutId', displayName: 'Layout' },
+        IMAGE_LINK: <ControlData>{ controlName: 'imagesLink', displayName: 'Image Link' },
     };
     public controlDataList: ControlData[] = [
         this.dataFields.NAME,
@@ -93,6 +94,12 @@ export class ModifyTaskComponent extends BaseComponent implements OnInit, OnDest
                     this.initForm(null);
                 }
             });
+
+        this.appSelectors.actionSuccessOfSubtype$(AppActionNames.SAVE_TASK)
+            .pipe(takeUntil(super.ngUnsubscribe()))
+            .subscribe((action: CustomAction) => {
+                debugger;
+            });
     }
 
     public initForm(data) {
@@ -110,8 +117,55 @@ export class ModifyTaskComponent extends BaseComponent implements OnInit, OnDest
         this.cdr.detectChanges();
     }
     public handleModifyAction() {
+        if (this.fgData.invalid) return;
 
+        const savedData = this.fgData.value;
+        savedData['userId'] = this.userId;
+
+        const formData = new FormData();
+        if (this.files.length) {
+            for (let index = 0; index < this.files.length; index++) {
+                const element = this.files[index];
+
+                formData.append("fileToUpload[]", element)
+            }
+        }
+
+        // this.store.dispatch(this.appActionsMethod.saveTaskAction({ savedData, formData }));
     }
+
+    // has some error
+    // private filterValidLink(savedData: any) {
+    //     let linksData = savedData[this.dataFields.IMAGE_LINK.controlName];
+    //     // if is layout is image or linksData has no value
+    //     if (!linksData || savedData[this.dataFields.LAYOUT.controlName] !== this.taskLayoutList[1].value) return '';
+
+    //     const linkArray = linksData.split(',');
+    //     if (!linkArray || !linkArray.length) {
+    //         alert('invalid images link')
+    //         linksData = '';
+    //     } else {
+    //         const validImgLink = [];
+    //         for (let index = 0; index < linkArray.length; index++) {
+    //             const element = linkArray[index];
+    //             if (!this.checkValidImage(element)) continue;
+
+    //             validImgLink.push(element);
+    //         }
+    //         linksData = validImgLink.toString();
+    //     }
+    //     return linksData;
+    // }
+    // private checkValidImage(url) {
+    //     let isValid;
+    //     var request = new XMLHttpRequest();
+    //     request.open("GET", url, true);
+    //     request.send();
+    //     request.onload = function () {
+    //         isValid = request.status == 200;
+    //     }
+    //     return isValid;
+    // }
 
     public onSelect(event) {
         if (!event || !event.addedFiles || !event.addedFiles.length) return;

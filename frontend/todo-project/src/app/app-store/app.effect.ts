@@ -79,4 +79,26 @@ export class AppEffects {
             );
         }),
     );
+
+    @Effect()
+    saveTask$ = this.actions$.pipe(
+        ofType(AppActionNames.SAVE_TASK),
+        switchMap((action: CustomAction) => {
+            return this.taskService.saveTask(action.payload).pipe(
+                map((res) => {
+                    if (!!res && res.code === 200)
+                        return this.appActionsMethod.successAction(
+                            action.type,
+                            res.data,
+                        );
+
+                    const mes = !!res ? res.message : 'error';
+                    return this.appActionsMethod.failedAction(action.type, mes);
+                }),
+                catchError((err) =>
+                    of(this.appActionsMethod.failedAction(action.type, err)),
+                ),
+            );
+        }),
+    );
 }

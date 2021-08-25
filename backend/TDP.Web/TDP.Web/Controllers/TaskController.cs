@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using TDP.Web.Base;
 using TDP.Web.Models.Core;
+using TDP.Web.Models.TasksModel;
 using TDP.Web.Services.TaskServ;
 
 namespace TDP.Web.Controllers
@@ -41,6 +43,22 @@ namespace TDP.Web.Controllers
         {
             var data = await _taskServ.GetItemById(taskId);
             return Ok(data);
+        }
+
+        [HttpPost]
+        [Route("save")]
+        public async Task<IActionResult> GetTaskDetail([FromBody] TasksModifyModel request)
+        {
+            var res = new ResponseModel<Web.DatabaseModel.Entites.Task>();
+            if (!ModelState.IsValid)
+            {
+                res.Code = HttpStatusCode.BadRequest;
+                res.Message = "Invalid Fields";
+                res.Data = null;
+                return Ok(res);
+            }
+
+            return Ok();
         }
     }
 }

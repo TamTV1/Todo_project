@@ -8,6 +8,7 @@ export enum AppActionNames {
     GET_DROPDOWN_TASK_LAYOUT = '[APP] GET DROPDOWN TASK LAYOUT',
     GET_TASK_DETAIL = '[APP] GET TASK DETAIL',
     GET_TASK_BY_USER = '[APP] GET TASK BY USER',
+    SAVE_TASK = '[APP] SAVE TASK',
 }
 
 @Injectable()
@@ -27,6 +28,12 @@ export class AppActionsMethod {
     public getTaskByUserAction(payload: any) {
         return {
             type: AppActionNames.GET_TASK_BY_USER,
+            payload: payload,
+        };
+    }
+    public saveTaskAction(payload: any) {
+        return {
+            type: AppActionNames.SAVE_TASK,
             payload: payload,
         };
     }

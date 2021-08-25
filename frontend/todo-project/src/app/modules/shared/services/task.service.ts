@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_SERVICE } from '@app/app.constant';
 import { Observable } from 'rxjs';
@@ -19,5 +19,12 @@ export class TaskService {
     }
     public getTaskByUser(params: any): Observable<any> {
         return this.httpClient.get<any>(`${this.taskUrl}/listByUser`, { params: { employeeId: params } });
+    }
+    public saveTask(data: any): Observable<any> {
+        const options = {
+            params: { request: data.savedData },
+            reportProgress: true,
+        };
+        return this.httpClient.post<any>(`${this.taskUrl}/save`, data.formData, options);
     }
 }
