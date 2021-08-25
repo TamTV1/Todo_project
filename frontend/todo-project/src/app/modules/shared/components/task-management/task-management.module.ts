@@ -7,7 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ErrorMessageModule } from '../error-message/error-message.module';
 import { NgBootstrapDatetimeAngularModule } from 'ng-bootstrap-datetime-angular';
-
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 @NgModule({
     imports: [
@@ -16,7 +16,8 @@ import { NgBootstrapDatetimeAngularModule } from 'ng-bootstrap-datetime-angular'
         FormsModule,
         ReactiveFormsModule,
         ErrorMessageModule,
-        NgBootstrapDatetimeAngularModule
+        NgBootstrapDatetimeAngularModule,
+        NgxDropzoneModule,
     ],
     declarations: [TaskManagementComponent, ModifyTaskComponent],
     exports: [TaskManagementComponent],

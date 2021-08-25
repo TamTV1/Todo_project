@@ -32,6 +32,7 @@ export class ModifyTaskComponent extends BaseComponent implements OnInit, OnDest
         END_TIME: <ControlData>{ controlName: 'endTime', displayName: 'End Time' },
         DESCRIPTION: <ControlData>{ controlName: 'description', displayName: 'Description' },
         LAYOUT: <ControlData>{ controlName: 'layout', displayName: 'Layout' },
+        IMAGE_LINK: <ControlData>{ controlName: 'imageLink', displayName: 'Image Link' },
     };
     public controlDataList: ControlData[] = [
         this.dataFields.NAME,
@@ -39,8 +40,12 @@ export class ModifyTaskComponent extends BaseComponent implements OnInit, OnDest
         this.dataFields.END_TIME,
         this.dataFields.DESCRIPTION,
         this.dataFields.LAYOUT,
+        this.dataFields.IMAGE_LINK,
     ];
     public taskLayoutList = [];
+
+    // image
+    public files: File[] = [];
     //#endregion
 
     public modalTitle = "New Task";
@@ -106,5 +111,36 @@ export class ModifyTaskComponent extends BaseComponent implements OnInit, OnDest
     }
     public handleModifyAction() {
 
+    }
+
+    public onSelect(event) {
+        if (!event || !event.addedFiles || !event.addedFiles.length) return;
+
+        const acceptTypeImage = ["image/png", "image/jpeg", "image/jpg"];
+        const maxFileSize = 8 * 1024 * 1024;
+        for (let index = 0; index < event.addedFiles.length; index++) {
+            const element = event.addedFiles[index];
+            if (!acceptTypeImage.includes(element.type.toLowerCase())) {
+                alert(`${element.name} is not image!`);
+                continue;
+            }
+
+            if (element.size > maxFileSize) {
+                alert(`${element.name} is more than 8Mb, please upload image has size lower 8Mb!`);
+                continue;
+            }
+
+            this.files.push(element);
+        }
+
+        // maybe bugs from lib, check later
+        setTimeout(() => {
+            this.cdr.detectChanges()
+        }, 150)
+    }
+
+    public onRemove(event) {
+        this.files.splice(this.files.indexOf(event), 1);
+        this.cdr.detectChanges();
     }
 }

@@ -3,7 +3,7 @@
     <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close"></button>
 </div>
 <div class="modal-body">
-    <form *ngIf="fgData" [formGroup]="fgData">
+    <form *ngIf="!!taskLayoutList.length && fgData" [formGroup]="fgData">
         <div class="mb-3">
             <label for="{{dataFields.NAME.controlName}}" class="form-label">{{dataFields.NAME.displayName}}</label>
             <input type="text" class="form-control" [attr.name]="dataFields.NAME.controlName"
@@ -41,6 +41,24 @@
                     {{ item.text }}
                 </option>
             </select>
+        </div>
+        <div class="mb-3">
+            <div [class.no-display]="fgData.controls[dataFields.LAYOUT.controlName].value === taskLayoutList[1].value">
+                <div class="custom-dropzone" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
+                    <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f"
+                        [removable]="true" (removed)="onRemove(f)">
+                        <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                    </ngx-dropzone-image-preview>
+                </div>
+            </div>
+            <div [class.no-display]="fgData.controls[dataFields.LAYOUT.controlName].value === taskLayoutList[0].value">
+                <textarea type="text" class="form-control" [attr.name]="dataFields.IMAGE_LINK.controlName"
+                    id="{{dataFields.IMAGE_LINK.controlName}}"
+                    [formControlName]="dataFields.IMAGE_LINK.controlName"></textarea>
+                <div class="form-text">
+                    Please enter image link and multiple with separate each link (ex: http://image1,http://image2)
+                </div>
+            </div>
         </div>
         <div class="mb-3 text-center">
             <button *ngIf="fgData" type="button" class="btn btn-primary" (click)="handleModifyAction()"
