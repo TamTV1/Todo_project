@@ -49,11 +49,6 @@ namespace TDP.Web.DatabaseModel.Entites
                     .HasMaxLength(36)
                     .IsUnicode(false);
 
-                entity.Property(e => e.TypeId)
-                    .IsRequired()
-                    .HasMaxLength(36)
-                    .IsUnicode(false);
-
                 entity.HasOne(d => d.Task)
                     .WithMany(p => p.Images)
                     .HasForeignKey(d => d.TaskId)
@@ -68,6 +63,10 @@ namespace TDP.Web.DatabaseModel.Entites
                     .IsUnicode(false);
 
                 entity.Property(e => e.EndTime).HasColumnType("datetime");
+
+                entity.Property(e => e.LayoutId)
+                    .HasMaxLength(36)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.StartTime).HasColumnType("datetime");
 

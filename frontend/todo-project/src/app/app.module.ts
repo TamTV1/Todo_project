@@ -17,6 +17,15 @@ import { IEmployeeState } from './modules/employee/employee-store/employee.state
 import { employeeReducer } from './modules/employee/employee-store/employee.reducer';
 import { EmployeeModule } from './modules/employee/employee.module';
 
+export interface AppState {
+  app: IAppState;
+  employee: IEmployeeState;
+}
+export const reducersDeclare: ActionReducerMap<AppState> = {
+  app: appReducer,
+  employee: employeeReducer,
+};
+
 @NgModule({
   declarations: [
     AppComponent
@@ -24,10 +33,7 @@ import { EmployeeModule } from './modules/employee/employee.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    StoreModule.forRoot({
-      app: appReducer,
-      employee: employeeReducer,
-    } as ActionReducerMap<AppState>),
+    StoreModule.forRoot(reducersDeclare),
     EffectsModule.forRoot([
       AppEffects,
       EmployeeEffects,
@@ -44,7 +50,3 @@ import { EmployeeModule } from './modules/employee/employee.module';
 })
 export class AppModule { }
 
-export interface AppState {
-  app: IAppState;
-  employee: IEmployeeState;
-}

@@ -5,13 +5,26 @@ export enum AppActionNames {
     SUCCESS_ACTION = '[APP] Success Action',
     FAILED_ACTION = '[APP] Failed Action',
 
+    GET_DROPDOWN_TASK_LAYOUT = '[APP] GET DROPDOWN TASK LAYOUT',
+    GET_TASK_DETAIL = '[APP] GET TASK DETAIL',
     GET_TASK_BY_USER = '[APP] GET TASK BY USER',
 }
 
 @Injectable()
 export class AppActionsMethod {
 
-    public getTaskByUser(payload: any) {
+    public getDropdownTaskLayoutAction() {
+        return {
+            type: AppActionNames.GET_DROPDOWN_TASK_LAYOUT,
+        };
+    }
+    public getTaskDetailAction(payload: any) {
+        return {
+            type: AppActionNames.GET_TASK_DETAIL,
+            payload: payload,
+        };
+    }
+    public getTaskByUserAction(payload: any) {
         return {
             type: AppActionNames.GET_TASK_BY_USER,
             payload: payload,

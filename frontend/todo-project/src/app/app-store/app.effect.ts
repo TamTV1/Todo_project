@@ -15,7 +15,51 @@ export class AppEffects {
     ) { }
 
     @Effect()
-    getEmployees$ = this.actions$.pipe(
+    getDropdownTaskLayout$ = this.actions$.pipe(
+        ofType(AppActionNames.GET_DROPDOWN_TASK_LAYOUT),
+        switchMap((action: CustomAction) => {
+            return this.taskService.getDropdownTaskLayout().pipe(
+                map((res) => {
+                    if (!!res && res.code === 200)
+                        return this.appActionsMethod.successAction(
+                            action.type,
+                            res.data,
+                        );
+
+                    const mes = !!res ? res.message : 'error';
+                    return this.appActionsMethod.failedAction(action.type, mes);
+                }),
+                catchError((err) =>
+                    of(this.appActionsMethod.failedAction(action.type, err)),
+                ),
+            );
+        }),
+    );
+
+    @Effect()
+    getTaskDetail$ = this.actions$.pipe(
+        ofType(AppActionNames.GET_TASK_DETAIL),
+        switchMap((action: CustomAction) => {
+            return this.taskService.getTaskDetail(action.payload).pipe(
+                map((res) => {
+                    if (!!res && res.code === 200)
+                        return this.appActionsMethod.successAction(
+                            action.type,
+                            res.data,
+                        );
+
+                    const mes = !!res ? res.message : 'error';
+                    return this.appActionsMethod.failedAction(action.type, mes);
+                }),
+                catchError((err) =>
+                    of(this.appActionsMethod.failedAction(action.type, err)),
+                ),
+            );
+        }),
+    );
+
+    @Effect()
+    getTaskByUser$ = this.actions$.pipe(
         ofType(AppActionNames.GET_TASK_BY_USER),
         switchMap((action: CustomAction) => {
             return this.taskService.getTaskByUser(action.payload).pipe(

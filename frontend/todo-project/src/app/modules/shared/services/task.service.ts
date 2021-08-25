@@ -11,6 +11,12 @@ export class TaskService {
     constructor(protected httpClient: HttpClient) {
     }
 
+    public getDropdownTaskLayout(): Observable<any> {
+        return this.httpClient.get<any>(`${this.taskUrl}/taskLayoutList`);
+    }
+    public getTaskDetail(params: any): Observable<any> {
+        return this.httpClient.get<any>(`${this.taskUrl}/detail`, { params: { taskId: params } });
+    }
     public getTaskByUser(params: any): Observable<any> {
         return this.httpClient.get<any>(`${this.taskUrl}/listByUser`, { params: { employeeId: params } });
     }

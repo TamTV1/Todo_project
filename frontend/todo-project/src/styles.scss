@@ -4,3 +4,10 @@
     color: #000 !important;
     filter: opacity(0.5)
 }
+
+.backdrop-second {
+    z-index: 1060 !important;
+}
+.modal-second {
+    z-index: 1061 !important;
+}

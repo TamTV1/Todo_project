@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, In
 import { AppActionNames, AppActionsMethod } from '@app/app-store/app.action';
 import { AppSelectors } from '@app/app-store/app.selector';
 import { AppState } from '@app/app.module';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { takeUntil } from 'rxjs/operators';
 import { BaseComponent } from '../../base/base.component';
@@ -23,11 +24,15 @@ export class TaskManagementComponent extends BaseComponent implements OnInit, On
     public empIdState: string;
     public taskData = [];
 
+    public selectedTaskId = "";
+
     constructor(
         protected store: Store<AppState>,
         protected appActionsMethod: AppActionsMethod,
         protected appSelectors: AppSelectors,
-        protected cdr: ChangeDetectorRef,) {
+        protected cdr: ChangeDetectorRef,
+        private modalService: NgbModal,
+    ) {
         super();
     }
     ngOnDestroy(): void {
@@ -38,7 +43,7 @@ export class TaskManagementComponent extends BaseComponent implements OnInit, On
         if (!this.empId || this.empId === this.empIdState) return;
 
         this.empIdState = this.empId;
-        this.store.dispatch(this.appActionsMethod.getTaskByUser(this.empId))
+        this.store.dispatch(this.appActionsMethod.getTaskByUserAction(this.empId))
 
         this.onEffectAction();
     }
@@ -59,5 +64,18 @@ export class TaskManagementComponent extends BaseComponent implements OnInit, On
     }
     public handleBackToInfo() {
         this.backToInfoAction.emit();
+    }
+    public handleModifyTask(taskId: string = '', content: any) {
+        this.selectedTaskId = taskId;
+
+        this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg', backdropClass: 'backdrop-second', windowClass: 'modal-second' }).result.then((result) => {
+            console.log(result);
+            // this.getEmployees();
+        }, (reason) => {
+            console.log(reason);
+            // this.getEmployees();
+        });
+
+        this.cdr.detectChanges();
     }
 }

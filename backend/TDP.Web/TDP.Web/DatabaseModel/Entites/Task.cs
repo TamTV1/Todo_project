@@ -14,6 +14,7 @@ namespace TDP.Web.DatabaseModel.Entites
 
         public string Id { get; set; }
         public string UserId { get; set; }
+        public string LayoutId { get; set; }
         public string Name { get; set; }
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }

@@ -1,1 +1,3 @@
-export interface IAppState { }
+export interface IAppState {
+    taskLayoutList: any[];
+}

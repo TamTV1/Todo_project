@@ -1,0 +1,38 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{modalTitle}}</h4>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+    <form *ngIf="fgData" [formGroup]="fgData">
+        <div class="mb-3">
+            <label for="{{dataFields.NAME.controlName}}" class="form-label">{{dataFields.NAME.displayName}}</label>
+            <input type="text" class="form-control" [attr.name]="dataFields.NAME.controlName"
+                id="{{dataFields.NAME.controlName}}" [formControlName]="dataFields.NAME.controlName"
+                (keydown.enter)="handleModifyAction()" autocomplete="off">
+            <error-message [condition]="xnErrorMessageHelper.isRequired(fgData, dataFields.NAME.controlName)"
+                [fieldName]="dataFields.NAME.displayName" [typeErr]="ERR_MES_TYPE_ENUM.REQUIRED">
+            </error-message>
+        </div>
+        <div class="mb-3">
+            <label for="{{dataFields.START_TIME.controlName}}"
+                class="form-label">{{dataFields.START_TIME.displayName}}</label>
+        </div>
+        <!--<div class="mb-3">
+            <label for="{{dataFields.PHONE.controlName}}" class="form-label">{{dataFields.PHONE.displayName}}</label>
+            <input type="text" class="form-control" [attr.name]="dataFields.PHONE.controlName"
+                id="{{dataFields.PHONE.controlName}}" [formControlName]="dataFields.PHONE.controlName"
+                (keydown.enter)="handleModifyAction()" autocomplete="off">
+        </div> -->
+        <div class="mb-3">
+            <label for="{{dataFields.DESCRIPTION.controlName}}"
+                class="form-label">{{dataFields.DESCRIPTION.displayName}}</label>
+            <textarea type="text" class="form-control" [attr.name]="dataFields.DESCRIPTION.controlName"
+                id="{{dataFields.DESCRIPTION.controlName}}" [formControlName]="dataFields.DESCRIPTION.controlName"
+                (keydown.enter)="handleModifyAction()" autocomplete="off"></textarea>
+        </div>
+        <div class="mb-3 text-center">
+            <button *ngIf="fgData" type="button" class="btn btn-primary" (click)="handleModifyAction()"
+                [disabled]="fgData.invalid">Continue</button>
+        </div>
+    </form>
+</div>

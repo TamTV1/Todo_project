@@ -1,16 +1,21 @@
 <div class="task-management">
     <div class="header-button">
-        <button type="button" class="btn btn-primary">New Task</button>
+        <button type="button" class="btn btn-primary" (click)="handleModifyTask('', contentTaskModal)">New Task</button>
         <button type="button" class="btn btn-outline-primary" (click)="handleDoLater()">Do later</button>
     </div>
     <div class="task-list">
         <h4>Task List</h4>
 
         <ul>
-            <li *ngFor="let item of taskData">{{item.name}}</li>
+            <li *ngFor="let item of taskData"><a href="#"
+                    (click)="handleModifyTask(item.id, contentTaskModal)">{{item.name}}</a></li>
         </ul>
     </div>
     <div class="bottom-header">
         <button type="button" class="btn btn-outline-primary" (click)="handleBackToInfo()">Back to Info tab</button>
     </div>
 </div>
+
+<ng-template #contentTaskModal let-modal class="test">
+    <modify-task [taskId]="selectedTaskId" [modal]="modal"></modify-task>
+</ng-template>
